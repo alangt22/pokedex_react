@@ -99,7 +99,7 @@ const Content: React.FC = () => {
 
   return (
     <>
-      <C.Img src="./assests/fundo.jpg"/>
+      <C.Img src="../assests/fundo.jpg"/>
       
       {showGenerationButtons && (
         <C.Btn>
