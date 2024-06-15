@@ -99,7 +99,7 @@ const Content: React.FC = () => {
 
   return (
     <>
-      <C.Img src="../assests/fundo.jpg"/>
+      <C.Img src="https://github.com/alangt22/pokedex_react/blob/main/assests/fundo.jpg?raw=true"/>
       
       {showGenerationButtons && (
         <C.Btn>
