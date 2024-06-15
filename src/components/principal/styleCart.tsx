@@ -132,7 +132,7 @@ export const Details = styled.div`
         }
     p{
         display: flex;
-        margin-bottom: -20px;
+        margin-bottom: 20px;
         -webkit-text-stroke: 2px #070707;
         color: #f3ff4a;
         font-size: 25px;
