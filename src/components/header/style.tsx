@@ -10,7 +10,7 @@ export const Title = styled.h1`
     margin-top: 25px;
     font-family: Pokemon Solid;
     box-shadow: 0 0 80px rgba(0, 0, 0, 1);
-    background-image: url('../assests/pokeTitle.jpeg');
+    background-image: url('https://github.com/alangt22/pokedex_react/blob/main/assests/pokeTitle.jpeg?raw=true');
     background-size: 21%; 
     background-repeat: no-repeat; 
     background-position: center; 
