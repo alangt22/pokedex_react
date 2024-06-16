@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import * as C from './style';
-import * as S from './styleCart';
+import * as C from './style'; 
+import * as S from './styleCart'; 
 
 interface Pokemon {
   name: string;
   sprites: {
-    front_default: string;
+    animated: string; 
+    front_default: string; 
   };
   height: number;
   weight: number;
@@ -20,6 +21,7 @@ const Content: React.FC = () => {
   const [showBackButton, setShowBackButton] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
+  const [error, setError] = useState<string | null>(null); 
 
   useEffect(() => {
     if (selectedGeneration !== null) {
@@ -59,17 +61,35 @@ const Content: React.FC = () => {
       setPokemonList(pokemonData);
       setShowGenerationButtons(false);
       setShowBackButton(true);
-    } catch (error) {
-      console.error('Error fetching Pokémon:', error);
+      setSelectedPokemon(null);
+      setError(null); 
+    } catch (error: any) {
+      setError(`Error fetching Pokémon: ${error.message}`);
     }
   };
 
   const fetchPokemon = async (pokemonName: string) => {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
-    if (!response.ok) {
-      throw new Error(`Pokemon ${pokemonName} not found`);
+    try {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+      if (!response.ok) {
+        throw new Error(`Pokemon ${pokemonName} not found`);
+      }
+      const data = await response.json();
+      return {
+        name: data.name,
+        sprites: {
+          animated: data.sprites.versions['generation-v']['black-white'].animated.front_default,
+          front_default: data.sprites.front_default,
+        },
+        height: data.height,
+        weight: data.weight,
+        abilities: data.abilities,
+        types: data.types,
+      };
+    } catch (error: any) {
+      console.error(`Error fetching Pokémon ${pokemonName}:`, error);
+      throw error;
     }
-    return await response.json();
   };
 
   const handleGenerationClick = (generation: number) => {
@@ -81,7 +101,8 @@ const Content: React.FC = () => {
     setPokemonList([]);
     setShowGenerationButtons(true);
     setShowBackButton(false);
-    setSelectedPokemon(null); 
+    setSelectedPokemon(null);
+    setError(''); 
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,8 +110,13 @@ const Content: React.FC = () => {
   };
 
   const handlePokemonClick = async (pokemon: Pokemon) => {
-    setSelectedPokemon(pokemon); 
- 
+    try {
+      const detailedPokemon = await fetchPokemon(pokemon.name);
+      setSelectedPokemon(detailedPokemon);
+      setError(null); 
+    } catch (error: any) {
+      setError(`Error fetching details for ${pokemon.name}: ${error.message}`);
+    }
   };
 
   const filteredPokemonList = pokemonList.filter(pokemon =>
@@ -100,7 +126,7 @@ const Content: React.FC = () => {
   return (
     <>
       <C.Img src="https://github.com/alangt22/pokedex_react/blob/main/assests/fundo.jpg?raw=true"/>
-      
+
       {showGenerationButtons && (
         <C.Btn>
           {[1, 2, 3, 4, 5, 6, 7, 8].map(generation => (
@@ -110,14 +136,14 @@ const Content: React.FC = () => {
           ))}
         </C.Btn>
       )}
-      
+
       {showBackButton && (
         <S.Input type="text" placeholder="Search Pokémon" value={searchTerm} onChange={handleInputChange} />
       )}
-      
+
       <S.Poke>
         {filteredPokemonList.map(pokemon => (
-          <div key={pokemon.name} onClick={() => handlePokemonClick(pokemon)}> {}
+          <div key={pokemon.name} onClick={() => handlePokemonClick(pokemon)}>
             <div className='card'>
                <img src={pokemon.sprites.front_default} alt={pokemon.name} />
             </div>
@@ -126,16 +152,17 @@ const Content: React.FC = () => {
         {showBackButton && <button onClick={handleBackButtonClick}>Voltar</button>}
       </S.Poke>
 
-      {}
+      {error !== null && <p>{error}</p>}
+
       {selectedPokemon && (
-      <S.Details>
-        <S.DetailsTitle>Detalhes do Pokémon</S.DetailsTitle>
-        <img src={selectedPokemon.sprites.front_default} alt={selectedPokemon.name} />
-        <p>Name: {selectedPokemon.name}</p>
-        <p>Abilities: {selectedPokemon.abilities.map(ability => ability.ability.name).join(', ')}</p>
-        <p>Types: {selectedPokemon.types.map(type => type.type.name).join(', ')}</p>
-        <S.DetailsButton onClick={() => setSelectedPokemon(null)}>Fechar</S.DetailsButton>
-      </S.Details>
+        <S.Details>
+          <S.DetailsTitle>Detalhes do Pokémon</S.DetailsTitle>
+          <img src={selectedPokemon.sprites.animated} alt={selectedPokemon.name} />
+          <p>Name: {selectedPokemon.name}</p>
+          <p>Abilities: {selectedPokemon.abilities.map(ability => ability.ability.name).join(', ')}</p>
+          <p>Types: {selectedPokemon.types.map(type => type.type.name).join(', ')}</p>
+          <S.DetailsButton onClick={() => setSelectedPokemon(null)}>Fechar</S.DetailsButton>
+        </S.Details>
       )}
     </>
   );

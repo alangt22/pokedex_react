@@ -171,7 +171,7 @@ export const DetailsButton = styled.button`
     bottom: 20px;
     right: 20px;
     background-color: #ffbd2f;
-    width: 300px;
+    width: 130px;
     height: 50px;
     max-width: calc(100% - 40px); 
     border-radius: 50px;
