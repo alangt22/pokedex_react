@@ -26,7 +26,8 @@ export const Btn = styled.div`
         height: 50px;
         border-radius: 50px;
         border: none; 
-        font-family: Pokemon solid;
+        font-family: Helvetica solid;
+        font-weight: bold;
         font-size: 19px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 1); 
         &:hover {

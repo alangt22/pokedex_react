@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
 export const Poke = styled.div`
+    
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
     grid-gap: 10px; 
     align-items: center;
     justify-content: center;
     gap: 141px;
-    margin: 20px;
+    margin: 50px 25px;
  @media screen and (max-width: 750px) {
        
         grid-template-columns: repeat(2, minmax(100px, 1fr)); 
@@ -73,7 +74,7 @@ export const Poke = styled.div`
     button {
         background-color: #ffbd2f;
         cursor: pointer;
-        width: 300px;
+        width: 250px;
         height: 50px;
         border-radius: 50px;
         border: none; 
@@ -98,13 +99,14 @@ export const Input = styled.input`
     display: flex;
     justify-content: center;
     text-align: center;
-    margin-left: 790px;
+    margin-left: 610px;
     background-color: #ffbd2f;
     width: 300px;
     height: 50px;
     border-radius: 50px;
     border: none; 
-    font-family: Pokemon solid;
+    font-family: Helvetica solid;
+    font-weight: bold;
     font-size: 19px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 1); 
     @media screen and (max-width:750px){
@@ -115,7 +117,7 @@ export const Input = styled.input`
 
 export const Details = styled.div`
   width: 500px;
-  height: 700px;
+  height: 650px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -125,24 +127,27 @@ export const Details = styled.div`
   border-radius:10px;
   border:5px solid #000000;
   z-index: 9999; 
+  
   @media screen and (max-width:750px){
             max-width: 320px;
             max-height: 570px;
             position: fixed;
         }
     p{
+        font-family: Arial, Helvetica, sans-serif;
         display: flex;
         margin-bottom: 20px;
         -webkit-text-stroke: 2px #070707;
         color: #f3ff4a;
-        font-size: 25px;
+        font-size: 30px;
         font-weight: bold;
-        letter-spacing: 5px;
+        letter-spacing: 1px;
         @media screen and (max-width:750px){
             margin-left: 8px;
-            font-size: 22px;
-            letter-spacing: 5px; 
+            font-size: 28px;
+            letter-spacing: 1px; 
             gap: 1px;
+            font-family: Arial, Helvetica, sans-serif;
         }
     }
 
@@ -164,6 +169,7 @@ justify-content: center;
 -webkit-text-stroke: 2px #005bbf;
 color: yellow;
 font-size: 28px;
+
 `;
 
 export const DetailsButton = styled.button`
@@ -176,7 +182,8 @@ export const DetailsButton = styled.button`
     max-width: calc(100% - 40px); 
     border-radius: 50px;
     border: none;
-    font-family: 'Pokemon Solid', sans-serif;
+    font-family: Helvetica solid;
+    font-weight: bold;
     font-size: 19px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     cursor: pointer;
